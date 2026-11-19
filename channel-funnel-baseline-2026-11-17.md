@@ -1,6 +1,6 @@
 # RecurPost: traffic, signups, activation and paid by channel, against baseline
 
-Snapshot date: 17 Nov 2026. Live version (re-runs the Mixpanel, Meta and Sheets queries when opened): https://claude.ai/artifact/XNNbFm9sP9nNkk84J7ddUf
+Snapshot date: 17 Nov 2026, updated 19 Nov with Meta spend from the Pro Start Me ad account. Live version (re-runs the Mixpanel, Meta and Sheets queries when opened): https://claude.ai/artifact/XNNbFm9sP9nNkk84J7ddUf
 
 **Windows.** Current = 19/20 Oct to 15/16 Nov 2026 (4 weeks). Baseline = 27 Jul to 18/19 Oct 2026 (12-week weekly average). The snapshot figures below come from queries run on 17 Nov, and their date edges differ by about one day from the live dashboard's.
 
@@ -8,8 +8,14 @@ Snapshot date: 17 Nov 2026. Live version (re-runs the Mixpanel, Meta and Sheets 
 
 ## Read this first: what the data cannot tell you
 
-1. **[Certain] You cannot compute CAC by channel today.**
-   - Google Ads spend is not reachable from this session. The Windsor connector (GA4 + Google Ads) failed to connect, there is no GA4 connector, and BigQuery has no credentials.
+0. **[Certain] Meta is now the largest marketing spend, and nothing ties it to revenue.**
+   - The Pro Start Me ad account spent ₹2,42,701 in the current 4 weeks (₹60,675 a week), against ₹23,787 a week in the baseline (+155%).
+   - It produced 1,422 leads (356 a week, ₹171 per lead), against 96 a week at ₹248 in the baseline.
+   - India new MRR moved only from about ₹9.2k to ₹9.6k a week. Even if every India deal came from Meta, that is about ₹6.3 of Meta spend per ₹1 of new monthly revenue.
+   - [Likely] Payback is no better than about 7 months at 85% gross margin. The true figure is worse, because some India deals come from other channels.
+1. **[Certain] You cannot compute Google Ads CAC today.**
+   - Google Ads and GA4 are connected only through Supermetrics, and its trial on team "Team jignesh.recurpost" expired on 6 Oct 2026, so every query is refused.
+   - No direct Google Ads or GA4 connector is installed on the account. Windsor.ai is connected but holds only Meta (the Pro Start Me account).
    - The Marketing KPI Tracker, where CPL and CAC were meant to live, is empty: its Channel Input and Weekly Input tabs have no rows since September.
    - The Leadership Scorecard (the Odoo KPI report) has no spend, CPL or CAC rows.
 2. **[Certain] Mixpanel's UTM properties are empty on 100% of signups.** This covers `initial_utm_*` and `$initial_referring_domain`. Channel was rebuilt from the `refer_url` user property, which stores the landing URL.
@@ -48,14 +54,27 @@ Snapshot date: 17 Nov 2026. Live version (re-runs the Mixpanel, Meta and Sheets 
 
 ### Spend, CPL and CAC
 
-- **Meta, RecurPost ad account [Certain].** ₹4,529 (27–31 Jul) plus ₹1,909 (Aug) bought 118 leads, about ₹55 per lead. Spend was ₹0 from September to November.
-- **Meta lead forms, 1–13 Sep [Certain, from the Paid Ads Performance Report sheet].** This ran in another account, which the connector cannot read.
+**Meta, Pro Start Me ad account [Certain] (via Windsor.ai).**
+
+| | Baseline / wk | Current / wk |
+|---|---|---|
+| Spend | ₹23,787 | ₹60,675 |
+| Leads | 96 | 356 |
+| Cost per lead (all spend) | ₹248 | ₹171 |
+| Spend on non-lead objectives (traffic, WhatsApp, sales, awareness) | ₹2,492 | ₹2,727 |
+
+- The current period's biggest campaigns are "191026 video ads Leads – Copy" (₹52.7k), "211026 A1 Leads" (₹42.6k) and "231026 Leads_lal" (₹35.4k).
+- The two "Old Leads" copies are the cheapest, at about ₹66 per lead.
+- Lead forms create no RecurPost account, so Meta CAC cannot be measured until leads are matched to Odoo outcomes.
+
+- **Meta, RecurPost ad account (inactive) [Certain].** ₹4,529 (27–31 Jul) plus ₹1,909 (Aug) bought 118 leads, about ₹55 per lead. Spend was ₹0 from September to November.
+- **Meta lead forms, 1–13 Sep [Certain, from the Paid Ads Performance Report sheet].** This is part of the Pro Start Me spend above.
   - ₹26,792 spent, 155 leads, CPL ₹173.
   - 90 qualified leads, ₹298 per qualified lead.
   - Paid and revenue columns are blank.
   - The Lead Tracker showed all 147 leads with no owner at its last update.
   - Meta CAC: **not measurable**. Zero Meta-tagged users in Mixpanel paid between Jul and Nov.
-- **Google Ads: spend not connected.** CAC = spend ÷ 3 paid customers so far from the current cohort.
+- **Google Ads: no data while the Supermetrics trial is expired.** CAC = spend ÷ 3 paid customers so far from the current cohort.
 
 ### Sales funnel (Leadership Scorecard, Odoo)
 
@@ -75,12 +94,12 @@ Snapshot date: 17 Nov 2026. Live version (re-runs the Mixpanel, Meta and Sheets 
 
 ## Actions, ranked
 
-1. **Get Google Ads spend into reporting this week.** Reconnect Windsor or export from Google Ads. Judge the channel on paid customers and activated users, not signups.
-2. **Run a brand-term exclusion in Performance Max** and compare website signups with and without it.
-3. **Fix attribution.**
+1. **Cap Meta lead-form spend near the baseline level until leads are matched to revenue.** Match each lead to its Odoo outcome and RecurPost account by email, then fund only the campaigns that produce paying customers.
+2. **Get Google Ads and GA4 data flowing.** Either connect both in Windsor.ai, which is already working, or renew Supermetrics. Judge the channel on paid customers and activated users, not signups.
+3. **Run a brand-term exclusion in Performance Max** and compare website signups with and without it.
+4. **Fix attribution.**
    - Persist UTMs on `account_created` and the user profile.
    - Tag the mobile-app install source.
    - Filter `gtm_debug` and internal accounts out of every KPI.
-4. **Pause ChatGPT Ads** until it produces activated users.
-5. **Don't restart Meta lead forms** until each lead is email-matched to a RecurPost account and Odoo outcome, so CPL can become CAC.
+5. **Pause ChatGPT Ads** until it produces activated users.
 6. **Retire or automate the Marketing KPI Tracker.** A manual tracker that nobody fills gives false confidence.
