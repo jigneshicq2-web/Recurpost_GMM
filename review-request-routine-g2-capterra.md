@@ -158,7 +158,7 @@ Send Template A within 1 hour of the call, with the first line changed to mentio
 
 ## 10. Tracker
 
-Use `review-request-tracker-template.csv` (import into Google Sheets). Columns:
+Live tracker: [RecurPost – G2 & Capterra Review Tracker](https://docs.google.com/spreadsheets/d/1LwKYUitOMq1znd4OJ1hR90PVK8aEiItqMVi9f0aSZ_A/edit) (tabs: Dashboard, Asks Log, Weekly, Lists). Offline copy: `review-request-tracker-template.csv`. Columns:
 
 `date_asked, customer_name, account_id, plan, csm, trigger (T1–T5), platform (G2/Capterra), template, reminder_sent (Y/N), review_posted (Y/N), date_posted, rating, incentive_paid (Y/N), quote_usable_for_site (Y/N), notes`
 
