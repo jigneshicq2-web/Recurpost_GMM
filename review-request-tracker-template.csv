@@ -1,0 +1,2 @@
+date_asked,customer_name,account_id,plan,csm,trigger,platform,template,reminder_sent,review_posted,date_posted,rating,incentive_paid,quote_usable_for_site,notes
+2026-12-01,Example Agency,ACC-0001,Agency,Jane,T1,G2,A,N,N,,,N,N,example row - delete
